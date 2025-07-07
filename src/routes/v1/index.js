@@ -8,6 +8,6 @@ const router = express.Router();
 router.get('/info', infoController.info);
 
 // Mount userRoutes at /signup
-router.use('/signup', userRoutes);
+router.use('/user', userRoutes);
 
 module.exports = router;
