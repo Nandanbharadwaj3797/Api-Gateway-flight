@@ -6,5 +6,7 @@ module.exports={
   PORT: process.env.PORT,
   SALT_ROUNDS: process.env.SALT_ROUNDS,
   JWT_SECRET: process.env.JWT_SECRET,
-  JWT_EXPIRATION_TIME: process.env.JWT_EXPIRATION_TIME
+  JWT_EXPIRATION_TIME: process.env.JWT_EXPIRATION_TIME,
+  FLIGHT_SERVICE: process.env.FLIGHT_SERVICE,
+  BOOKING_SERVICE: process.env.BOOKING_SERVICE,
 }
