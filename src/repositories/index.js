@@ -1,5 +1,6 @@
-const UserRepository = require("./user-repository");
 
 module.exports ={
-    UserRepository
+    RoleRepository:require("./role-repository"),
+    UserRepository:require("./user-repository")
+
 }
