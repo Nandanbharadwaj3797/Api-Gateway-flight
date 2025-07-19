@@ -7,5 +7,7 @@ const { Auth } = require("../../utils/common");
 router.post("/signup",AuthRequestMiddlewares.validateAuthRequest, UserController.createUser);
 router.post("/signin",AuthRequestMiddlewares.validateAuthRequest, UserController.signin);
 
+router.post('/role',AuthRequestMiddlewares.checkAuth,AuthRequestMiddlewares.isAdmin,UserController.addRoletoUser);
+
 
 module.exports=router;

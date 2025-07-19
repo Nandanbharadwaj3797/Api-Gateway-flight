@@ -58,7 +58,32 @@ async function signin(req, res) {
     }
 }
 
+async function addRoletoUser(req, res) {
+    try {
+        const token = await UserService.addRoletoUser({
+            role: req.body.role,
+            id: req.body.id
+        });
+
+        return res.status(StatusCodes.OK).json({
+            success: true,
+            message: "Login successful",
+            data: token,
+            error: {}
+        });
+    } catch (error) {
+        console.log("Error in signin:", error);
+        return res.status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR).json({
+            success: false,
+            message: "Login failed",
+            data: {},
+            error: error.explanation || error.message
+        });
+    }
+}
+
 module.exports = {
     createUser,
-    signin
+    signin,
+    addRoletoUser
 };

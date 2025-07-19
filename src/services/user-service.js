@@ -80,8 +80,54 @@ async function isAuthenticated(token) {
         throw new AppError('Something went wrong while verifying token', StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }
+
+async function addRoletoUser(data) {
+    try{
+        const user = await userRepo.get(data.id);
+        if (!user) {
+            throw new AppError('User not found', StatusCodes.NOT_FOUND);
+        }
+        const role = await roleRepo.getRoleByName(data.role);
+        if (!role) {
+            throw new AppError('Role not found', StatusCodes.NOT_FOUND);
+        }
+        user.addRole(role);
+        return user;
+    }catch(error){
+        if (error instanceof AppError) {
+            throw error;
+        }
+        throw new AppError('Something went wrong while adding role to user', StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+}
+
+async function isAdmin(id) {
+  try {
+    const user = await userRepo.get(id);
+    if (!user) {
+      throw new AppError('User not found', StatusCodes.NOT_FOUND);
+    }
+
+    const adminRole = await roleRepo.getRoleByName(ENUMS.USER_ROLES_ENUMS.ADMIN);
+    if (!adminRole) {
+      throw new AppError('No role found for ADMIN', StatusCodes.NOT_FOUND);
+    }
+
+    const hasAdminRole = await user.hasRole(adminRole);
+    return hasAdminRole;
+  } catch (error) {
+    console.error("Error in isAdmin:", error);
+    if (error instanceof AppError) {
+      throw error;
+    }
+    throw new AppError('Something went wrong while checking admin status', StatusCodes.INTERNAL_SERVER_ERROR);
+  }
+}
+
 module.exports = {
     createUser,
     signin,
-    isAuthenticated
+    isAuthenticated,
+    addRoletoUser,
+    isAdmin
 };
